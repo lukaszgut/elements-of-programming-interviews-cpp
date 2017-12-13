@@ -88,6 +88,30 @@ short parity_xor_and_lookup(uint64_t word) {
 	return parities[word & lookup_mask];
 }
 
+/** 
+ * Next three variants should be all O(1):
+ */
+
+// Propagate rightmost bit that is 1 all the way to the right
+// Not sure if nice, because uses decrement not stated in list of allowed ops.
+uint8_t propagate_rightmost_set_bit(uint8_t word) {
+	return word | (word -1);
+}
+
+// I assume that numIsPow2 is actually a power of two
+// Again, not sure however if can use -1, as it was not mentioned.
+// If instead of numIsPow2 a 'power' would be known' 
+// then one can use shift left and right approach.
+uint64_t modPowerOfTwo(uint64_t left, uint64_t numIsPow2) {
+	return left & (numIsPow2 - 1);
+}
+
+// Use trick to reset lowest bit to zero
+// Power of two has only one so it will zero it.
+bool isPowerOf2(uint64_t word) {
+	return (word & (word -1)) == 0;
+}
+
 int main() {
 	cout<<"Parity of 0: "<<parity(0)<<endl;
 	cout<<"Parity of 1: "<<parity(1)<<endl;
